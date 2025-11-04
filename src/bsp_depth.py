@@ -12,6 +12,11 @@ def run_bsp_depth(depth_dir, out_dir, thresh=0.05):
         if not fname.endswith(".npy"):
             continue
         depth = np.load(os.path.join(depth_dir, fname))
+        # --- Robust handling of depth arrays ---
+        if depth.ndim > 2:
+            depth = depth.squeeze()
+        depth = depth.astype(np.float64, copy=False)
+        # ---------------------------------------
         gx = cv2.Sobel(depth, cv2.CV_64F, 1, 0, ksize=3)
         gy = cv2.Sobel(depth, cv2.CV_64F, 0, 1, ksize=3)
         edges = (np.abs(gx) + np.abs(gy)) > thresh
