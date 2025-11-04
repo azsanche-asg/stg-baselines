@@ -32,6 +32,7 @@ def run_seg_repeat(img_dir, out_dir):
             "persist_ids": [],
             "motion": [],
         }
-        out_path = os.path.join(out_dir, fname.replace(".png", "_pred.json"))
+        base_name = fname.replace('_mask.png', '_pred.json') if '_mask.png' in fname else fname.replace('.png', '_pred.json')  # ensure naming consistency
+        out_path = os.path.join(out_dir, base_name)
         with open(out_path, "w", encoding="utf-8") as f:
             json.dump(pred, f)

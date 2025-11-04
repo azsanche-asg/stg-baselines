@@ -28,6 +28,7 @@ def run_bsp_depth(depth_dir, out_dir, thresh=0.05):
             "persist_ids": [],
             "motion": [],
         }
-        out_path = os.path.join(out_dir, fname.replace(".npy", "_pred.json"))
+        base_name = fname.replace('_depth.npy', '_pred.json') if '_depth.npy' in fname else fname.replace('.npy', '_pred.json')  # ensure naming consistency
+        out_path = os.path.join(out_dir, base_name)
         with open(out_path, "w", encoding="utf-8") as f:
             json.dump(pred, f)
